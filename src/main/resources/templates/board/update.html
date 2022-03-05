@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charst="UTF-8">
+    <title>수정</title>
+</head>
+<body>
+
+<form th:action="@{'/write/edit/' + ${boardDto.id}}" method="post">
+    <input type="hidden" name="_method" value="put"/>
+    <input type="hidden" name="id" th:value="${boardDto.id}"/>
+
+    제목 : <input type="text" name="title" th:value="${boardDto.title}"> <br>
+    작성자 : <input type="text" name="writer" th:value="${boardDto.writer}"> <br>
+    내용 <textarea name="content" th:text="${boardDto.content}"></textarea> <br>
+
+    <input type="submit" th:value="수정">
+
+</form>
+
+
+
+
+
+
+
+
+</body>
+</html>
