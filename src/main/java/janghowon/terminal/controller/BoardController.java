@@ -68,6 +68,7 @@ public class BoardController {
         return "redirect:/notice";
     }
 
+    // 게시물 삭제
     @DeleteMapping("/write/{id}")
     public String delete(@PathVariable("id") Long id) {
         boardService.deleteBoard(id);
@@ -77,8 +78,9 @@ public class BoardController {
     // 게시물 검색
     @GetMapping("/board/search")
     public String search(@RequestParam(value = "keyword") String keyword, Model model, Pageable pageable) {
-        Page<BoardDto> boardDtoList = boardService.searchBoards(keyword, keyword, pageable);
-        model.addAttribute("boards", boardDtoList);
+        Page<BoardDto> boards = boardService.searchBoards(keyword, keyword, pageable);
+        model.addAttribute("boards", boards);
         return "board/list";
     }
+
 }

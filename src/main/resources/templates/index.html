@@ -14,7 +14,29 @@
 <!--header-->
 <div th:insert="common/header.html" id="header"></div>
 
-<h1>메인 페이지</h1>
+<div class="d-flex justify-content-center m-5">
+    <div>
+        <h1>시간표를 선택하세요</h1>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center m-5" >
+    <form action="searchtime" method="get">
+        <select class="form-select" aria-label="Default select example" th:name="arrival">
+            <option selected>선택</option>
+            <option value="동서울">동서울</option>
+            <option value="인천">인천</option>
+            <option value="안양, 부천">안양, 부천</option>
+            <option value="수원">수원</option>
+            <option value="안산">안산</option>
+            <option value="평택">평택</option>
+            <option value="이황리">이황리</option>
+            <option value="태평리">태평리</option>
+            <option value="하이닉스">하이닉스</option>
+        </select>
+        <button type="submit" class="btn btn-primary my-3">조회</button>
+    </form>
+</div>
 
 <!--footer-->
 <div th:insert="common/footer.html" id="footer"></div>
