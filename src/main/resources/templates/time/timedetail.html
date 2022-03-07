@@ -14,7 +14,12 @@
 <!--header-->
 <div th:insert="common/header.html" id="header"></div>
 
+
+
 <div class="m-5">
+    <div>
+        총 <span th:text="${businfos.totalElements}"> 건</span>
+    </div>
     <table class="table text-center">
         <thead>
         <tr>
@@ -41,29 +46,29 @@
         th:with="start=${T(java.lang.Math).floor(businfos.number/10)*10 + 1}, last=(${start + 9 < businfos.totalPages ? start + 9 : businfos.totalPages})">
 
         <li class="page-item">
-            <a class="page-link" th:href="@{/(searchtime=1)}">
+            <a class="page-link" th:href="@{/searchtime(page=1, arrival=${arrival})}">
                 <span>처음</span>
             </a>
         </li>
 
         <li class="page-item" th:class="${businfos.first} ? 'disabled'">
-            <a class="page-link" th:href="${businfos.first} ? '#' : @{/(searchtime=${businfos.number}, arrival=${param.search})}">
+            <a class="page-link" th:href="${businfos.first} ? '#' : @{/searchtime(page=${businfos.number}, arrival=${arrival})}">
                 <span>이전</span>
             </a>
         </li>
 
-        <li th:class="${searchtime == businfos.number + 1} ? 'disabled'" aria-current="page" th:each="searchtime : ${#numbers.sequence(start, last)}">
-            <a class="page-link" th:text="${searchtime}" th:href="@{/searchtime(searchtime=${searchtime}, arrival=${param.search})}"></a>
+        <li th:class="${page == businfos.number + 1} ? 'disabled'" aria-current="page" th:each="page : ${#numbers.sequence(start, last)}">
+            <a class="page-link" th:text="${page}" th:href="@{/searchtime(page=${page}, arrival=${arrival})}"></a>
         </li>
 
         <li class="page-item"  th:class="${businfos.last} ? 'disabled'">
-            <a class="page-link" th:href="${businfos.last} ? '#' : @{/(searchtime=${businfos.number + 2}, arrival=${param.search})}">
+            <a class="page-link" th:href="${businfos.last} ? '#' : @{/searchtime(page=${businfos.number + 2}, arrival=${arrival})}">
                 <span>다음</span>
             </a>
         </li>
 
         <li class="page-item">
-            <a class="page-link" th:href="@{/(searchtime=${businfos.totalPages})}">
+            <a class="page-link" th:href="@{/searchtime(page=${businfos.totalPages}, arrival=${arrival})}">
                 <span>마지막</span>
             </a>
         </li>

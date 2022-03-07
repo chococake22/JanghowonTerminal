@@ -37,7 +37,7 @@ public class BusInfoController {
     @GetMapping("/searchtime")
     public String searchtime(@RequestParam(value = "arrival") String arrival, Model model, Pageable pageable) {
         Page<BusInfoDto> busInfoDtoList = busInfoService.searchTimes(arrival, pageable);
-        System.out.println("arrival : " + arrival);
+        model.addAttribute("arrival", arrival);
         model.addAttribute("businfos", busInfoDtoList);
         return "time/timedetail";
     }
