@@ -1,5 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -31,6 +32,10 @@
                 </li>
             </ul>
         </div>
+
+            <a class="btn btn-secondary" role="button" sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
+        <a class="btn btn-secondary" role="button" sec:authorize="!isAuthenticated()" th:href="@{/login}">로그인</a>
+
     </div>
 </nav>
 
