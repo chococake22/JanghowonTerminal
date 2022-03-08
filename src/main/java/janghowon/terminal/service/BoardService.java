@@ -41,8 +41,8 @@ public class BoardService {
                 .stream()
                 .map(board -> new BoardDto(
                         board.getId(),
-                        board.getTitle(),
                         board.getWriter(),
+                        board.getTitle(),
                         board.getContent(),
                         board.getCreatedDate(),
                         board.getModifiedDate()))
@@ -61,9 +61,9 @@ public class BoardService {
 
         BoardDto boardDto = BoardDto.builder()
                 .id(board.getId())
+                .writer(board.getWriter())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .writer(board.getWriter())
                 .createdDate(board.getCreatedDate())
                 .modifiedDate(board.getModifiedDate())
                 .build();

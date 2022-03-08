@@ -40,7 +40,7 @@
         <tr th:each="board : ${boards}" >
             <td th:text="${board.id}"></td>
             <td>
-                <a th:href="@{'/write/' + ${board.id}}">
+                <a class="text-decoration-none" th:href="@{'/write/' + ${board.id}}">
                     <span th:text="${board.title}"></span>
                 </a>
             </td>
