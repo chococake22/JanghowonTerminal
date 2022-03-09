@@ -22,11 +22,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/notice", "/write/{id}", "/location", "/board/search", "/searchtime").permitAll()
-                .antMatchers("/time/timeadd").hasRole("USER")
+                .antMatchers("/time/timeadd").hasRole("USER_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .usernameParameter("apple")
+                .usernameParameter("user")
                 .passwordParameter("1234")
                 .defaultSuccessUrl("/")
                 .permitAll()
