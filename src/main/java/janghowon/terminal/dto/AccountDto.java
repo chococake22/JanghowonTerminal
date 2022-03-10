@@ -5,6 +5,8 @@ import janghowon.terminal.domain.Account;
 import janghowon.terminal.role.Role;
 import lombok.*;
 
+import javax.persistence.Column;
+
 @Getter
 @Setter
 @ToString
@@ -12,10 +14,20 @@ import lombok.*;
 public class AccountDto {
 
     private Long id;
+
+    @Column(nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String phone;
+
+    @Column(nullable = false)
     private Role role;
 
     public Account toEntity() {

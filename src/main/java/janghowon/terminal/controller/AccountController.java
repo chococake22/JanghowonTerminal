@@ -35,4 +35,16 @@ public class AccountController {
         return "redirect:/";
     }
 
+    @GetMapping("/mypage")
+    public String myPage(Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
+        model.addAttribute("accountDetails", accountDetails);
+        return "/account/mypage";
+    }
+
+    @PostMapping("/mypage")
+    public String myPageCheck(@AuthenticationPrincipal AccountDetails accountDetails) {
+        accountService.getAccount(accountDetails.getUsername());
+        return "redirect:/";
+    }
+
 }

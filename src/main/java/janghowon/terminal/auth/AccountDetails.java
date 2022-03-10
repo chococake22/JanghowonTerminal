@@ -19,6 +19,12 @@ public class AccountDetails implements UserDetails {
 
     private Account account;
 
+    // UserDetails안에 있는 회원 정보 조회
+    public Account getAccount() {
+        return account;
+    }
+
+    // 권한 설정
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

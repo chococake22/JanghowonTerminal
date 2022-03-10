@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +50,23 @@ public class AccountService implements UserDetailsService {
                 .encode(accountDto.getPassword()));
 
         return accountRepository.save(accountDto.toEntity()).getId();
+    }
 
+    @Transactional
+    public AccountDto getAccount(String username) {
+
+        Account account = accountRepository.findByUsername(username);
+
+        AccountDto accountDto = AccountDto.builder()
+                .id(account.getId())
+                .username(account.getUsername())
+                .password(account.getPassword())
+                .email(account.getEmail())
+                .phone(account.getPhone())
+                .role(account.getRole())
+                .build();
+
+        return accountDto;
 
     }
 }
