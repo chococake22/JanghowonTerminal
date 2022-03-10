@@ -24,7 +24,10 @@
             <label for="title">제목</label>
         </div>
 
-        <input type="hidden" class="form-control" name="writer" id="writer" placeholder="Leave a writer here">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" th:value="${boardDto.writer}" name="writer" id="writer" placeholder="Leave a title here" readonly>
+            <label for="writer">작성자</label>
+        </div>
 
         <div class="form-floating">
             <textarea style="height: 300px" class="form-control" th:text="${boardDto.content}" name="content" id="content" placeholder="Leave a comment here"></textarea>

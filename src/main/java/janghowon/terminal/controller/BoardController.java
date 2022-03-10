@@ -1,10 +1,12 @@
 package janghowon.terminal.controller;
 
 
+import janghowon.terminal.auth.UserAccount;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +20,6 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
-
-    @GetMapping("/")
-    public String index() {
-        return "/index";
-    }
 
     // 게시물 목록 보기
     @GetMapping("/notice")
@@ -40,8 +37,9 @@ public class BoardController {
 
     // 게시물 작성 확인
     @PostMapping("/write")
-    public String write(BoardDto boardDto) {
+    public String write(BoardDto boardDto, Model model, @AuthenticationPrincipal UserAccount userAccount) {
         boardService.save(boardDto);
+        model.addAttribute("userAccount", userAccount);
         return "redirect:/notice";
     }
 

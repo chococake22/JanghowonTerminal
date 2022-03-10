@@ -20,7 +20,11 @@
     <div>
         <h1>목적지를 선택하세요</h1>
     </div>
+    <a class="mx-2 text-decoration-none" sec:authorize="isAuthenticated()" th:text="${accountDetails.username}"></a>
+    <a class="mx-2 text-decoration-none" sec:authorize="isAuthenticated()" th:text="${accountDetails.authorities}"></a>
 </div>
+
+
 
 <div class="d-flex justify-content-center m-5" >
     <form action="searchtime" method="get">

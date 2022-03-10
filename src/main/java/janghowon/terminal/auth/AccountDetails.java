@@ -1,20 +1,33 @@
 package janghowon.terminal.auth;
 
 import janghowon.terminal.domain.Account;
-import lombok.RequiredArgsConstructor;
+import janghowon.terminal.role.Role;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-@RequiredArgsConstructor
-public class PrincipalDetail implements UserDetails {
+@AllArgsConstructor
+@NoArgsConstructor
+public class AccountDetails implements UserDetails {
 
-    private final Account account;
+    private Account account;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+        Role role = account.getRole();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.toString());
+        Collection<GrantedAuthority> collections = new ArrayList<>();
+        collections.add(authority);
+
+        return collections;
     }
 
     @Override

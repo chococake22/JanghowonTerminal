@@ -16,13 +16,13 @@
 
 <div class="m-5">
     <h3>글쓰기</h3>
-    <form action="/write" method="post">
+    <form th:action="@{/write}" method="post">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" name="title" id="title" placeholder="Leave a title here">
             <label for="title">제목</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="writer" id="writer" placeholder="Leave a writer here">
+            <input type="text" class="form-control" name="writer" id="writer" th:value="${#authentication.name}" readonly>
             <label for="writer">작성자</label>
         </div>
         <div class="form-floating">
@@ -36,9 +36,6 @@
         </div>
     </form>
 </div>
-
-
-
 
 <!--footer-->
 <div th:insert="common/footer.html" id="footer"></div>
