@@ -3,6 +3,7 @@ package janghowon.terminal.service;
 import janghowon.terminal.auth.AccountDetails;
 import janghowon.terminal.domain.Account;
 import janghowon.terminal.auth.UserAccount;
+import janghowon.terminal.domain.Board;
 import janghowon.terminal.dto.AccountDto;
 import janghowon.terminal.repository.AccountRepository;
 import janghowon.terminal.role.Role;
@@ -29,22 +30,25 @@ public class AccountService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Account account = accountRepository.findByUsername(username);
+        Optional<Account> accountWrapper = accountRepository.findByUsername(username);
+
+        Account account = accountWrapper.get();
 
         if(account == null) {
             throw new UsernameNotFoundException("존재하지 않는 아이디입니다.");
         }
 
+        // UserDetails를 구현한 객체에 담아서 넘기기
         return new AccountDetails(account);
     }
 
-    // 회원 가입
+    // 회원가입
     @Transactional
     public Long save(AccountDto accountDto) {
 
         // 회원가입시 자동으로 USER 권한 설정
         // ADMIN은 관리자만 사용
-        accountDto.setRole(Role.USER);
+        accountDto.setRole(Role.ADMIN);
 
         accountDto.setPassword(bCryptPasswordEncoder
                 .encode(accountDto.getPassword()));
@@ -52,10 +56,13 @@ public class AccountService implements UserDetailsService {
         return accountRepository.save(accountDto.toEntity()).getId();
     }
 
+
+    // 회원 정보 가져오기(entity -> dto)
     @Transactional
     public AccountDto getAccount(String username) {
 
-        Account account = accountRepository.findByUsername(username);
+        Optional<Account> accountWrapper = accountRepository.findByUsername(username);
+        Account account = accountWrapper.get();
 
         AccountDto accountDto = AccountDto.builder()
                 .id(account.getId())
@@ -69,4 +76,21 @@ public class AccountService implements UserDetailsService {
         return accountDto;
 
     }
+
+    // 회원정보 수정
+    @Transactional
+    public Long update(AccountDto accountDto) {
+        Optional<Account> accountWrapper = accountRepository.findById(accountDto.getId());
+
+        Account account = accountWrapper.get();
+
+        accountDto.setRole(Role.USER);
+
+        accountDto.setPassword(bCryptPasswordEncoder
+                .encode(accountDto.getPassword()));
+
+        return accountRepository.save(accountDto.toEntity()).getId();
+
+    }
+
 }

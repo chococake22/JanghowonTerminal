@@ -52,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedPage("/error")
                 .and()
-                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                // csrf 설정 해제
+                .csrf().disable();
 
     }
 }

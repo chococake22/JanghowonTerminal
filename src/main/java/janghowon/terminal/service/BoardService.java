@@ -99,7 +99,7 @@ public class BoardService {
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id"));
 
         // 제목에 해당 검색어가 포함된 게시물은 모두 가져온다.
-        Page<Board> boardEntities = boardRepository.findByTitleContainingOrContentContaining(keyword, content, pageable);
+        Page<Board> boardEntities = boardRepository.findByTitleContainingOrContentContaining(keyword, keyword, pageable);
 
         int totalElements = (int) boardEntities.getTotalElements();
 
@@ -108,8 +108,8 @@ public class BoardService {
                 .stream()
                 .map(board -> new BoardDto(
                         board.getId(),
-                        board.getTitle(),
                         board.getWriter(),
+                        board.getTitle(),
                         board.getContent(),
                         board.getCreatedDate(),
                         board.getCreatedDate()))

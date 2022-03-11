@@ -14,20 +14,10 @@ import javax.persistence.Column;
 public class AccountDto {
 
     private Long id;
-
-    @Column(nullable = false)
     private String username;
-
-    @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false)
     private String email;
-
-    @Column(nullable = false)
     private String phone;
-
-    @Column(nullable = false)
     private Role role;
 
     public Account toEntity() {

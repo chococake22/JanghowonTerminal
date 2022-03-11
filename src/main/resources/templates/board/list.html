@@ -18,9 +18,9 @@
 <div class="m-5 form-inline d-flex justify-content-between">
 
     <h3>공지사항</h3>
-    <form action="/board/search" method="get" class="form-inline d-flex justify-content-between">
+    <form th:action="@{/board/search}" method="get" class="form-inline d-flex justify-content-between">
         <div class="form-group w-20">
-            <input class="form-control" name="keyword" type="text" placeholder="검색어를 입력하세요">
+            <input class="form-control" name="keyword" th:id="keyword" type="text" placeholder="검색어를 입력하세요">
         </div>
         <button type="submit" class="btn btn-primary mb-2 pl-2 ms-2">검색</button>
     </form>

@@ -19,21 +19,23 @@
     <h3>마이페이지</h3>
 
     <form class="row g-3" th:action="@{/mypage}"  method="post">
+        <input type="hidden" th:id="id" th:name="id" th:value="${accountDto.id}" >
+        <input type="hidden" name="_method" value="put"/>
         <div class="col-md-6">
             <label for="username" class="form-label">아이디</label>
-            <input type="text" class="form-control" th:value="${accountDetails.account.username}" id="username" name="username">
+            <input type="text" class="form-control" th:value="${accountDto.username}" id="username" name="username" readonly>
         </div>
         <div class="col-md-6">
             <label for="password" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" th:value="${accountDetails.account.password}" id="password" name="password">
+            <input type="password" class="form-control" th:value="${accountDto.password}" id="password" name="password">
         </div>
         <div class="col-12">
             <label for="email" class="form-label">이메일</label>
-            <input type="email" class="form-control" th:value="${accountDetails.account.email}" id="email" name="email">
+            <input type="email" class="form-control" th:value="${accountDto.email}" id="email" name="email">
         </div>
         <div class="col-12">
             <label for="phone" class="form-label">전화번호</label>
-            <input type="tel" class="form-control" th:value="${accountDetails.account.phone}" id="phone" name="phone">
+            <input type="tel" class="form-control" th:value="${accountDto.phone}" id="phone" name="phone">
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">확인</button>

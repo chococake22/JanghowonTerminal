@@ -30,14 +30,20 @@ public class AccountApiController {
     // 회원 상세 정보
     @GetMapping("/detail/{username}")
     public Account getAccount(@PathVariable String username) {
-        return accountRepository.findByUsername(username);
+        return accountRepository.findByUsername(username).get();
     }
 
     // 회원가입
     @PostMapping("/signup")
     public Long signUpAccount(@RequestBody AccountDto accountDto) {
-        log.info("accountDto.getEmail() : " + accountDto.getEmail());
-        return accountRepository.save(accountDto.toEntity()).getId();
+        log.info("accountDto.getEmail() = {} : " + accountDto.getEmail());
+        return accountService.save(accountDto);
+    }
+
+    // 회원 정보 수정
+    @PutMapping("/update")
+    public Long update(@RequestBody AccountDto accountDto) {
+        return accountService.update(accountDto);
     }
 
 

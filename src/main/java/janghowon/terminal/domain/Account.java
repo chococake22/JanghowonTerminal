@@ -43,4 +43,12 @@ public class Account  {
         this.phone = phone;
         this.role = role;
     }
+
+    public void update(String username, String password, String email, String phone, Role role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+    }
 }
