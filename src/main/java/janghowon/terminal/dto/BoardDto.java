@@ -1,10 +1,12 @@
 package janghowon.terminal.dto;
 
 
+import janghowon.terminal.domain.Comment;
 import lombok.*;
 import janghowon.terminal.domain.Board;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter

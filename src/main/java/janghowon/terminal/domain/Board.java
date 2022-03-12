@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)  // 기본 생성자의 접근을 protected로 설정
 @Getter
@@ -16,6 +18,7 @@ public class Board extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
+    @Column(name = "board_id")
     private Long id;
 
     @Column(length = 10, nullable = false)
@@ -34,5 +37,4 @@ public class Board extends TimeEntity {
         this.title = title;
         this.content = content;
     }
-
 }

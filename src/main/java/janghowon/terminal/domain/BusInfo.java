@@ -16,6 +16,7 @@ public class BusInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "businfo_id")
     private Long id;
 
     // 도착지
