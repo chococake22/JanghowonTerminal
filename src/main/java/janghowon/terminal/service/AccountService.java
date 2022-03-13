@@ -2,8 +2,6 @@ package janghowon.terminal.service;
 
 import janghowon.terminal.auth.AccountDetails;
 import janghowon.terminal.domain.Account;
-import janghowon.terminal.auth.UserAccount;
-import janghowon.terminal.domain.Board;
 import janghowon.terminal.dto.AccountDto;
 import janghowon.terminal.repository.AccountRepository;
 import janghowon.terminal.role.Role;

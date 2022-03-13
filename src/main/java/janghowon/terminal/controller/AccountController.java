@@ -2,9 +2,7 @@ package janghowon.terminal.controller;
 
 
 import janghowon.terminal.auth.AccountDetails;
-import janghowon.terminal.auth.UserAccount;
 import janghowon.terminal.dto.AccountDto;
-import janghowon.terminal.dto.BoardDto;
 import janghowon.terminal.repository.AccountRepository;
 import janghowon.terminal.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class AccountController {
