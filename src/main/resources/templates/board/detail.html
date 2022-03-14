@@ -36,8 +36,30 @@
             <button class="btn btn-primary text-decoration-none" id="delete-btn">삭제</button>
         </form>
     </div>
-
 </div>
+
+<div class="card m-5">
+    <form th:action="@{/commentsave}" method="post">
+        <input type="hidden" name="writer" id="writer" th:value="${#authentication.name}">
+        <input type="hidden" name="id" id="id" th:value="${boardDto.id}">
+        <div class="card-body m-3">
+            <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary text-decoration-none" id="delete-btn">등록</button>
+    </form>
+</div>
+
+<div class="m-5">
+    <h3>댓글</h3>
+</div>
+
+<div class="card m-5" th:each="commentDto : ${commentDtos}">
+    <div class="card-body m-3">
+        <p th:text="${commentDto.writer}"></p>
+        <p class="form-control" th:text="${commentDto.content}" id="commentcontent" rows="3"></p>
+    </div>
+</div>
+
 
 <!--footer-->
 <div th:insert="common/footer.html" id="footer"></div>

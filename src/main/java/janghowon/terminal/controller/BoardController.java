@@ -2,6 +2,10 @@ package janghowon.terminal.controller;
 
 
 import janghowon.terminal.auth.UserAccount;
+import janghowon.terminal.domain.Comment;
+import janghowon.terminal.dto.CommentDto;
+import janghowon.terminal.repository.CommentRepository;
+import janghowon.terminal.service.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,12 +18,17 @@ import org.springframework.web.bind.annotation.*;
 import janghowon.terminal.dto.BoardDto;
 import janghowon.terminal.service.BoardService;
 
+import java.util.List;
+
 @Controller
 @AllArgsConstructor // 생성자 주입을 받음
 public class BoardController {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private CommentService commentService;
 
     // 게시물 목록 보기
     @GetMapping("/notice")
@@ -45,9 +54,12 @@ public class BoardController {
 
     // 상세 정보
     @GetMapping("/write/{id}")
-    public String detail(@PathVariable("id") Long id, Model model) {
+    public String detail(@PathVariable("id") Long id, Model model, CommentDto commentDto, @AuthenticationPrincipal UserAccount userAccount) {
         BoardDto boardDto = boardService.getBoard(id);
+        List<CommentDto> commentDtos = commentService.getComments(boardDto.getId());
         model.addAttribute("boardDto", boardDto);
+        model.addAttribute("commentDtos", commentDtos);
+        model.addAttribute("userAccount", userAccount);
         return "board/detail";
     }
 

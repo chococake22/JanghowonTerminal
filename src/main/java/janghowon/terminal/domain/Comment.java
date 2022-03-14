@@ -1,10 +1,13 @@
 package janghowon.terminal.domain;
 
+import janghowon.terminal.dto.CommentDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -30,6 +33,16 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
+
+    public CommentDto toEntity() {
+        CommentDto commentDto = CommentDto.builder()
+                .id(id)
+                .writer(writer)
+                .content(content)
+                .board(board)
+                .build();
+        return commentDto;
+    }
 
     @Builder
     public Comment(Long id, String writer, String content, Board board) {
