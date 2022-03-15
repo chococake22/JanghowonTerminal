@@ -1,11 +1,8 @@
 package janghowon.terminal.dto;
 
-import com.sun.istack.NotNull;
 import janghowon.terminal.domain.Account;
 import janghowon.terminal.role.Role;
 import lombok.*;
-
-import javax.persistence.Column;
 
 @Getter
 @Setter

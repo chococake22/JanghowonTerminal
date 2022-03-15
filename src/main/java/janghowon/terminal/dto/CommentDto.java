@@ -4,9 +4,6 @@ import janghowon.terminal.domain.Board;
 import janghowon.terminal.domain.Comment;
 import lombok.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Getter
 @Setter
 @ToString

@@ -1,17 +1,7 @@
 package janghowon.terminal.dto;
 
-
-import janghowon.terminal.domain.Board;
 import janghowon.terminal.domain.BusInfo;
 import lombok.*;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter

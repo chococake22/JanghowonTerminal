@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Board extends TimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키 생성을 DB에 위임함
     @Column(name = "board_id")
     private Long id;
 

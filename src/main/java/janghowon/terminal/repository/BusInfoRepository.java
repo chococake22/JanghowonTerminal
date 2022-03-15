@@ -1,7 +1,6 @@
 package janghowon.terminal.repository;
 
 import janghowon.terminal.domain.BusInfo;
-import janghowon.terminal.dto.BusInfoDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
