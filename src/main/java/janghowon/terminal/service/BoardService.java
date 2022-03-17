@@ -112,7 +112,7 @@ public class BoardService {
                         board.getTitle(),
                         board.getContent(),
                         board.getCreatedDate(),
-                        board.getCreatedDate()))
+                        board.getModifiedDate()))
                 .collect(Collectors.toList()), pageable, totalElements);
     }
 
