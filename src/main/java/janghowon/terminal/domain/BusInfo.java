@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)  // 기본 생성자의 접근을 protected로 설정
 @Getter
@@ -26,11 +28,17 @@ public class BusInfo {
     @Column(nullable = false)
     private String departtime;
 
+    @Column(nullable = false)
+    private String price;
+
     // 경유지
     private String layover;
 
     // 참고 사항
     private String note;
+
+    @OneToMany(mappedBy = "busInfo")
+    private List<Account> accounts = new ArrayList<>();
 
     @Builder
     public BusInfo(Long id, String arrival, String departtime, String layover, String note) {

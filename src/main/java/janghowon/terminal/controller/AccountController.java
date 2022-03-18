@@ -42,19 +42,43 @@ public class AccountController {
         return "redirect:/";
     }
 
-    // 마이페이지 폼
+    // 마이페이지
     @GetMapping("/mypage")
-    public String myPage(Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
+    public String mypage(Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
         AccountDto accountDto = accountService.getAccount(accountDetails.getUsername());
         model.addAttribute("accountDto", accountDto);
         return "/account/mypage";
     }
 
-    // 회원 정보 수정
-    @PutMapping("/mypage")
-    public String myPageUpdate(AccountDto accountDto) {
-        accountService.update(accountDto);
-        return "redirect:/";
+    // 회원정보 변경 폼
+    @GetMapping("/changeinfo")
+    public String changeinfo(Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
+        AccountDto accountDto = accountService.getAccount(accountDetails.getUsername());
+        model.addAttribute("accountDto", accountDto);
+        model.addAttribute("accountDetails", accountDetails);
+        return "/account/changeinfo";
     }
 
+    // 회원 정보 수정
+    @PutMapping("/changeinfo")
+    public String changeInfoUpdate(AccountDto accountDto) {
+        accountService.update(accountDto);
+        return "redirect:/mypage";
+    }
+
+    // 비밀번호 변경 폼
+    @GetMapping("/changepwd")
+    public String changePwd(Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
+        AccountDto accountDto = accountService.getAccount(accountDetails.getUsername());
+        model.addAttribute("accountDto", accountDto);
+        model.addAttribute("accountDetails", accountDetails);
+        return "/account/changepwd";
+    }
+
+    // 비밀번호 변경 폼
+    @PutMapping("/changepwd")
+    public String changePwdUpdate(AccountDto accountDto) {
+        accountService.update(accountDto);
+        return "redirect:/mypage";
+    }
 }

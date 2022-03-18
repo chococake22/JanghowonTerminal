@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate
 public class Account  {
 
     @Id
@@ -34,6 +36,11 @@ public class Account  {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    // 원하는 버스 시간표 선택
+    @ManyToOne
+    @JoinColumn(name = "businfo_id")
+    private BusInfo busInfo;
 
     @Builder
     public Account(Long id, String username, String password, String email, String phone, Role role) {

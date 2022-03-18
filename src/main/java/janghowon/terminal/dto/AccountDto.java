@@ -3,11 +3,13 @@ package janghowon.terminal.dto;
 import janghowon.terminal.domain.Account;
 import janghowon.terminal.role.Role;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+@DynamicUpdate
 public class AccountDto {
 
     private Long id;

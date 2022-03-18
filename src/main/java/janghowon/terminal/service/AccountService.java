@@ -46,7 +46,7 @@ public class AccountService implements UserDetailsService {
 
         // 회원가입시 자동으로 USER 권한 설정
         // ADMIN은 관리자만 사용
-        accountDto.setRole(Role.ADMIN);
+        accountDto.setRole(Role.USER);
         accountDto.setPassword(bCryptPasswordEncoder
                 .encode(accountDto.getPassword()));
 
@@ -78,12 +78,14 @@ public class AccountService implements UserDetailsService {
     @Transactional
     public Long update(AccountDto accountDto) {
         Optional<Account> accountWrapper = accountRepository.findById(accountDto.getId());
-
         Account account = accountWrapper.get();
 
-        accountDto.setRole(Role.USER);
-        accountDto.setPassword(bCryptPasswordEncoder
-                .encode(accountDto.getPassword()));
+        // 비밀번호 변경 여부
+        if(accountDto.getPassword().equals(account.getPassword())) {
+            accountDto.setPassword(account.getPassword());
+        } else {
+            accountDto.setPassword(bCryptPasswordEncoder.encode(accountDto.getPassword()));
+        }
 
         // 엔티티가 스냅샷과 비교해서 바뀐 부분에 대해서 알아서 update 쿼리를 날리게 된다.
         // 그래서 update가 반영된 것.
