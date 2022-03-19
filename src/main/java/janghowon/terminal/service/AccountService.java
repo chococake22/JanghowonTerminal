@@ -21,9 +21,7 @@ import java.util.Optional;
 public class AccountService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -90,7 +88,6 @@ public class AccountService implements UserDetailsService {
         // 엔티티가 스냅샷과 비교해서 바뀐 부분에 대해서 알아서 update 쿼리를 날리게 된다.
         // 그래서 update가 반영된 것.
         return accountRepository.save(accountDto.toEntity()).getId();
-
     }
 
 }

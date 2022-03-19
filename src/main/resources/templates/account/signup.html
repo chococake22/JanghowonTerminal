@@ -18,22 +18,38 @@
 
     <h3>회원가입</h3>
 
-    <form class="row g-3" th:action="@{/signup}" method="post">
+    <form class="row g-3" th:action="@{/signup}" th:object="${accountDto}" method="post">
         <div class="col-md-6">
-            <label for="username" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="username" name="username">
+            <label for="username" th:text="#{label.account.id}"  class="form-label">아이디</label>
+            <input type="text" class="form-control"
+                   th:field="*{username}" th:errorclass="field-error" id="username">
+            <div class="field-error" th:errors="*{username}">
+                아이디 오류
+            </div>
         </div>
         <div class="col-md-6">
-            <label for="password" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <label for="password" th:text="#{label.account.password}" th:field="*{password}" class="form-label">비밀번호</label>
+            <input type="password" class="form-control"
+                   th:field="*{password}" th:errorclass="field-error" id="password">
+            <div class="field-error" th:errors="*{password}">
+                비밀번호 오류
+            </div>
         </div>
         <div class="col-12">
-            <label for="email" class="form-label">이메일</label>
-            <input type="email" class="form-control" id="email" name="email">
+            <label for="email" th:text="#{label.account.email}" th:field="*{email}" class="form-label">이메일</label>
+            <input type="email" class="form-control"
+                   th:field="*{email}" th:errorclass="field-error" id="email">
+            <div class="field-error" th:errors="*{email}">
+                이메일 오류
+            </div>
         </div>
         <div class="col-12">
-            <label for="phone" class="form-label">전화번호</label>
-            <input type="tel" class="form-control" id="phone" name="phone">
+            <label for="phone" th:text="#{label.account.phone}" th:field="*{phone}" class="form-label">전화번호</label>
+            <input type="tel" class="form-control"
+                   th:field="*{phone}" th:errorclass="field-error" id="phone">
+            <div class="field-error" th:errors="*{phone}">
+                전화번호 오류
+            </div>
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">확인</button>

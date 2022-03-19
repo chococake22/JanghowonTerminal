@@ -9,7 +9,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @Setter
 @ToString
 @NoArgsConstructor
-@DynamicUpdate
 public class AccountDto {
 
     private Long id;
