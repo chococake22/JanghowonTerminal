@@ -58,7 +58,7 @@ public class AccountController {
         log.info("accountDto.getUsername={} " + accountDto.getUsername());
         // 2. 아이디를 입력했는데 중복인 경우
         if(!ObjectUtils.isEmpty(accountDto.getUsername())
-                && !ObjectUtils.isEmpty(accountService.getAccount(accountDto.getUsername()))) {
+                && !ObjectUtils.isEmpty(accountRepository.findByUsername(accountDto.getUsername()))) {
                 bindingResult.addError(new FieldError("accountDto"
                 ,"username"
                 ,"이미 존재하는 아이디입니다."));
@@ -74,12 +74,12 @@ public class AccountController {
         }
 
         // 4. 이메일을 입력하지 않은 경우
-        if(!ObjectUtils.isEmpty(accountDto.getEmail())) {
+        if(ObjectUtils.isEmpty(accountDto.getEmail())) {
             bindingResult.addError(new FieldError("accountDto", "email", accountDto.getEmail(), false, new String[]{"required.accountDto.email"}, null, null));
         }
 
         // 5. 전화번호를 입력하지 않은 경우
-        if(!ObjectUtils.isEmpty(accountDto.getPhone())) {
+        if(ObjectUtils.isEmpty(accountDto.getPhone())) {
             bindingResult.addError(new FieldError("accountDto", "phone", accountDto.getPhone(), false, new String[]{"required.accountDto.phone"}, null, null));
         }
 

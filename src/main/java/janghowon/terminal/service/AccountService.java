@@ -6,6 +6,7 @@ import janghowon.terminal.dto.AccountDto;
 import janghowon.terminal.repository.AccountRepository;
 import janghowon.terminal.role.Role;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
@@ -55,6 +56,8 @@ public class AccountService implements UserDetailsService {
     // 회원 정보 가져오기(entity -> dto)
     @Transactional
     public AccountDto getAccount(String username) {
+
+        log.info("username={}", username);
 
         Optional<Account> accountWrapper = accountRepository.findByUsername(username);
         Account account = accountWrapper.get();
