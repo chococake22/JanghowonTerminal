@@ -3,9 +3,12 @@ package janghowon.terminal.controller;
 
 import janghowon.terminal.auth.AccountDetails;
 import janghowon.terminal.domain.Account;
+import janghowon.terminal.domain.AccountBusInfo;
 import janghowon.terminal.dto.AccountDto;
+import janghowon.terminal.repository.AccountBusInfoRepository;
 import janghowon.terminal.repository.AccountRepository;
 import janghowon.terminal.service.AccountService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,15 +24,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Slf4j
 @Controller
+@AllArgsConstructor
 public class AccountController {
 
-    @Autowired
     private AccountService accountService;
 
-    @Autowired
     private AccountRepository accountRepository;
+
+    private AccountBusInfoRepository accountBusInfoRepository;
+
+
 
     // 메인 페이지
     @GetMapping("/")
@@ -49,6 +57,8 @@ public class AccountController {
     @PostMapping("/signup")
     public String signUp(@ModelAttribute AccountDto accountDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
+        // 조건에 맞는지 오류를 검증하고 오류가 나면 bindingResult에 FieldError 객체를 집어 넣는다
+
         // 검증 로직
         // 1. 아이디를 입력하지 않은 경우
         if(ObjectUtils.isEmpty(accountDto.getUsername())) {
@@ -56,6 +66,7 @@ public class AccountController {
         }
 
         log.info("accountDto.getUsername={} " + accountDto.getUsername());
+
         // 2. 아이디를 입력했는데 중복인 경우
         if(!ObjectUtils.isEmpty(accountDto.getUsername())
                 && !ObjectUtils.isEmpty(accountRepository.findByUsername(accountDto.getUsername()))) {
@@ -68,7 +79,7 @@ public class AccountController {
         String pattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}";
         if (ObjectUtils.isEmpty(accountDto.getPassword())
             || !(accountDto.getPassword().matches(pattern))) {
-            bindingResult.addError(new FieldError("account"
+            bindingResult.addError(new FieldError("accountDto"
                     , "password"
                     ,"비밀번호가 영문 대문자, 소문자, 특수문자 조합이어야 하고 8자 이상 20자 이하여야 합니다."));
         }
@@ -88,26 +99,28 @@ public class AccountController {
             return "/account/signup";
         }
 
-
+        // 검증 성공
+        // redirect를 할 경우 데이터를 전달한다.
         redirectAttributes.addAttribute("username", accountDto.getUsername());
         redirectAttributes.addAttribute("status", true);
 
-
-
         accountService.save(accountDto);
-        return "redirect:/mypage/{username}";
+        return "redirect:/";
     }
 
     // 마이페이지
     @GetMapping("/mypage")
-    public String mypage(Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
+    public String mypage(Model model, @AuthenticationPrincipal AccountDetails accountDetails, AccountBusInfo accountBusInfo) {
         AccountDto accountDto = accountService.getAccount(accountDetails.getUsername());
+        List<AccountBusInfo> accountBusInfos = accountBusInfoRepository.findAllByAccount_Id(accountDto.getId());
+
         model.addAttribute("accountDto", accountDto);
+        model.addAttribute("accountBusInfos", accountBusInfos);
         return "/account/mypage";
     }
 
     // 회원정보 변경 폼
-    @GetMapping("/changeinfo")
+    @GetMapping("/mypage/changeinfo")
     public String changeinfo(Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
         AccountDto accountDto = accountService.getAccount(accountDetails.getUsername());
         model.addAttribute("accountDto", accountDto);
@@ -123,17 +136,36 @@ public class AccountController {
     }
 
     // 비밀번호 변경 폼
-    @GetMapping("/changepwd")
+    @GetMapping("/mypage/changepwd")
     public String changePwd(Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
+
         AccountDto accountDto = accountService.getAccount(accountDetails.getUsername());
         model.addAttribute("accountDto", accountDto);
         model.addAttribute("accountDetails", accountDetails);
-        return "/account/changepwd";
+        return "account/changepwd";
     }
 
     // 비밀번호 변경 폼
     @PutMapping("/changepwd")
-    public String changePwdUpdate(AccountDto accountDto) {
+    public String changePwdUpdate(@ModelAttribute AccountDto accountDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        // 비밀번호가 영문 대문자, 소문자, 특수문자 조합이어야 하고 8자 이상 20자 이하
+        String pattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}";
+        if (ObjectUtils.isEmpty(accountDto.getPassword())
+                || !(accountDto.getPassword().matches(pattern))) {
+            bindingResult.addError(new FieldError("accountDto"
+                    ,"password"
+                    ,"비밀번호가 영문 대문자, 소문자, 특수문자 조합이어야 하고 8자 이상 20자 이하여야 합니다."));
+        }
+
+        // 에러가 하나라도 있으면 다시 회원가입 폼으로 간다
+        if (bindingResult.hasErrors()) {
+            return "account/changepwd";
+        }
+
+        // redirect를 할 경우 데이터를 전달한다.
+        redirectAttributes.addAttribute("username", accountDto.getUsername());
+        redirectAttributes.addAttribute("status", true);
         accountService.update(accountDto);
         return "redirect:/mypage";
     }

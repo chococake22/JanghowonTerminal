@@ -8,6 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,25 +21,29 @@
 <div th:insert="common/header.html" id="header"></div>
 
 <div class="m-5">
-
     <h3>비밀번호 변경</h3>
-
-    <form class="row g-3" th:action="@{/changepwd}"  method="post">
-        <input type="hidden" th:id="id" th:name="id" th:value="${accountDto.id}" >
-        <input type="hidden" th:id="role" th:name="role" th:value="${accountDto.role}" >
-        <input type="hidden" class="form-control" th:value="${accountDto.username}" id="username" name="username" readonly>
-        <input type="hidden" class="form-control" th:value="${accountDto.email}" id="email" name="email">
-        <input type="hidden" class="form-control" th:value="${accountDto.phone}" id="phone" name="phone">
+    <form class="row g-3" th:action="@{/changepwd}" th:object="${accountDto}"  method="post">
+        <input type="hidden" th:field="*{id}" th:value="${accountDto.id}" >
+        <input type="hidden" th:field="*{role}" th:value="${accountDto.role}" >
+        <input type="hidden" th:field="*{username}" th:value="${accountDto.username}">
+        <input type="hidden" th:field="*{email}" th:value="${accountDto.email}">
+        <input type="hidden" th:field="*{phone}" th:value="${accountDto.phone}">
+<!--        put 매핑 지원을 위해서 hidden 타입 필요-->
         <input type="hidden" name="_method" value="put"/>
+
         <div class="col-md-6">
-            <label for="password" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" th:value="${accountDetails.password}" id="password" name="password">
+            <label for="password" class="form-label" th:text="#{label.account.password}"  th:field="*{password}">비밀번호</label>
+            <input type="password" class="form-control"
+                   th:field="*{password}" th:errorclass="field-error" id="password">
+            <div class="field-error" th:errors="*{password}">
+                비밀번호 오류
+            </div>
         </div>
+
         <div class="col-12">
             <button type="submit" class="btn btn-primary">변경</button>
         </div>
     </form>
-
 </div>
 
 

@@ -18,9 +18,11 @@
 
     <div class="m-5 form-inline d-flex">
         <h3>마이페이지</h3>
-        <button type="button" class="btn btn-primary mx-5" sec:authorize="isAuthenticated()">
-            <a th:href="@{/changeinfo}" role="button" class="btn-primary text-decoration-none">회원정보 변경</a>
-        </button>
+        <a th:href="@{/mypage/changeinfo}" role="button">
+            <button type="button" class="btn btn-primary mx-5" sec:authorize="isAuthenticated()">
+                회원정보 변경
+            </button>
+        </a>
     </div>
     <div class="m-5">
         <input type="hidden" th:id="id" th:name="id" th:value="${accountDto.id}" >
@@ -44,6 +46,33 @@
                 <input type="text" readonly class="form-control-plaintext" th:value="${accountDto.phone}" th:id="phone" th:name="phone">
             </div>
         </div>
+    </div>
+</div>
+
+<div class="card m-5">
+
+    <div class="m-5">
+        <h3>내 시간표</h3>
+        <table class="table text-center">
+            <thead>
+            <tr>
+                <th scope="col">목적지</th>
+                <th scope="col">시간</th>
+                <th scope="col">요금</th>
+                <th scope="col">경유지</th>
+                <th scope="col">특이사항</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="accountBusInfo : ${accountBusInfos}" >
+                <td th:text="${accountBusInfo.businfo.arrival}"></td>
+                <td th:text="${accountBusInfo.businfo.departtime}"></td>
+                <td th:text="${accountBusInfo.businfo.price}"></td>
+                <td th:text="${accountBusInfo.businfo.layover}"></td>
+                <td th:text="${accountBusInfo.businfo.note}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

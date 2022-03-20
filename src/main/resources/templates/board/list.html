@@ -58,9 +58,11 @@
 </div>
 
 <div class="mx-5">
-    <button type="button" class="btn btn-primary" sec:authorize="isAuthenticated()">
-        <a th:href="@{/write}" class="btn-primary text-decoration-none">글쓰기</a>
-    </button>
+    <a th:href="@{/write}">
+        <button type="button" class="btn btn-primary" sec:authorize="isAuthenticated()">
+            글쓰기
+        </button>
+    </a>
 </div>
 
 

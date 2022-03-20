@@ -1,9 +1,6 @@
 package janghowon.terminal.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,7 +26,7 @@ public class BusInfo {
     private String departtime;
 
     @Column(nullable = false)
-    private String price;
+    private Integer price;
 
     // 경유지
     private String layover;
@@ -37,17 +34,17 @@ public class BusInfo {
     // 참고 사항
     private String note;
 
-    @OneToMany(mappedBy = "busInfo")
-    private List<Account> accounts = new ArrayList<>();
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<AccountBusInfo> accountBusInfos = new ArrayList<>();
 
     @Builder
-    public BusInfo(Long id, String arrival, String departtime, String layover, String note) {
+    public BusInfo(Long id, String arrival, String departtime, Integer price, String layover, String note, List<AccountBusInfo> accountBusInfos) {
         this.id = id;
         this.arrival = arrival;
         this.departtime = departtime;
+        this.price = price;
         this.layover = layover;
         this.note = note;
+        this.accountBusInfos = accountBusInfos;
     }
-
-
 }

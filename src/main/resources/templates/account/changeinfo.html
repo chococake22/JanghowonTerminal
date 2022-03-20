@@ -16,13 +16,15 @@
 
 <div class="m-5">
 
-    <h3>회원정보 변경</h3>
+    <div class="form-inline d-flex">
+        <h3>회원정보 변경</h3>
 
-    <button type="button" class="btn btn-primary mx-5" sec:authorize="isAuthenticated()">
-        <a th:href="@{/changepwd}" role="button" class="btn-primary text-decoration-none">비밀번호 변경</a>
-    </button>
+        <button type="button" class="btn btn-primary mx-5" sec:authorize="isAuthenticated()">
+            <a th:href="@{/mypage/changepwd}" role="button" class="btn-primary text-decoration-none">비밀번호 변경</a>
+        </button>
+    </div>
 
-    <form class="row g-3" th:action="@{/changeinfo}"  method="post">
+    <form class="row g-3" th:action="@{/mypage/changeinfo/changepwd}"  method="post">
         <input type="hidden" th:id="id" th:name="id" th:value="${accountDto.id}" >
         <input type="hidden" th:id="role" th:name="role" th:value="${accountDto.role}" >
         <input type="hidden" th:id="password" th:name="password" th:value="${accountDetails.password}">

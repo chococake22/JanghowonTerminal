@@ -1,14 +1,13 @@
 package janghowon.terminal.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class AccountBusInfo {
 
     @Id @GeneratedValue
@@ -22,10 +21,17 @@ public class AccountBusInfo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "businfo_id")
-    private BusInfo busInfo;
+    private BusInfo businfo;
 
     // 특이사항
     @Column
     private String notice;
 
+    @Builder
+    public AccountBusInfo(Long id, Account account, BusInfo businfo, String notice) {
+        this.id = id;
+        this.account = account;
+        this.businfo = businfo;
+        this.notice = notice;
+    }
 }

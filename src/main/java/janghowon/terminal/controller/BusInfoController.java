@@ -1,18 +1,20 @@
 package janghowon.terminal.controller;
 
+import janghowon.terminal.auth.AccountDetails;
+import janghowon.terminal.domain.BusInfo;
 import janghowon.terminal.dto.BusInfoDto;
 import janghowon.terminal.service.BusInfoService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-
+@Slf4j
 @Controller
 @AllArgsConstructor
 public class BusInfoController {
@@ -42,6 +44,11 @@ public class BusInfoController {
         return "time/timedetail";
     }
 
-
-
+    // 내 버스 시간표로 추가
+    @PostMapping("/searchtime/{id}")
+    public String mytimeadd(@PathVariable("id") Long id, Model model, BusInfoDto busInfoDto, @AuthenticationPrincipal AccountDetails accountDetails) {
+        busInfoService.mytimeadd(busInfoDto, accountDetails);
+        log.info("추가");
+        return "redirect:/mypage";
+    }
 }

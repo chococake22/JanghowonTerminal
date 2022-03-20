@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/spring_board?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/terminal?serverTimezone=UTC&characterEncoding=UTF-8
     username: test
     password: 1234
   mvc:
@@ -18,8 +18,6 @@ spring:
 
   messages:
     basename: messages, errors
-
-
 
 
 logging:
