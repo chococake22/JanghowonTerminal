@@ -40,15 +40,15 @@ public class BusInfoController {
     public String searchtime(@RequestParam(value = "arrival") String arrival, Model model, Pageable pageable) {
         Page<BusInfoDto> busInfoDtoList = busInfoService.searchTimes(arrival, pageable);
         model.addAttribute("arrival", arrival);
-        model.addAttribute("businfos", busInfoDtoList);
+        model.addAttribute("busInfoDtos", busInfoDtoList);
         return "time/timedetail";
     }
 
     // 내 버스 시간표로 추가
     @PostMapping("/searchtime/{id}")
-    public String mytimeadd(@PathVariable("id") Long id, Model model, BusInfoDto busInfoDto, @AuthenticationPrincipal AccountDetails accountDetails) {
-        busInfoService.mytimeadd(busInfoDto, accountDetails);
-        log.info("추가");
+    public String mytimeadd(@PathVariable("id") Long id, @AuthenticationPrincipal AccountDetails accountDetails) {
+        busInfoService.mytimeadd(id, accountDetails);
+        log.info("리다이렉트");
         return "redirect:/mypage";
     }
 }

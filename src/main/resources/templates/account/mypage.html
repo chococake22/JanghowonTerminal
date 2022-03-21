@@ -64,20 +64,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="accountBusInfo : ${accountBusInfos}" >
-                <td th:text="${accountBusInfo.businfo.arrival}"></td>
-                <td th:text="${accountBusInfo.businfo.departtime}"></td>
-                <td th:text="${accountBusInfo.businfo.price}"></td>
-                <td th:text="${accountBusInfo.businfo.layover}"></td>
-                <td th:text="${accountBusInfo.businfo.note}"></td>
-            </tr>
+                <tr th:each="accountBusInfo : ${accountBusInfos}" >
+                    <td th:text="${accountBusInfo.businfo.arrival}"></td>
+                    <td th:text="${accountBusInfo.businfo.departtime}"></td>
+                    <td th:text="${accountBusInfo.businfo.price}"></td>
+                    <td th:text="${accountBusInfo.businfo.layover}"></td>
+                    <td th:text="${accountBusInfo.businfo.note}"></td>
+                </tr>
             </tbody>
         </table>
     </div>
 </div>
-
-
-
 
 <!--footer-->
 <div th:insert="common/footer.html" id="footer"></div>

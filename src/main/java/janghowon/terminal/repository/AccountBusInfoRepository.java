@@ -11,5 +11,9 @@ public interface AccountBusInfoRepository extends JpaRepository<AccountBusInfo, 
 
     AccountBusInfo findByBusinfo_Id(Long id);
 
+    AccountBusInfo findByAccount_IdAndBusinfo_Id(Long id, Long id2);
+
+
+
 
 }

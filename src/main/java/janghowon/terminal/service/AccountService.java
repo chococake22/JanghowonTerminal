@@ -57,8 +57,6 @@ public class AccountService implements UserDetailsService {
     @Transactional
     public AccountDto getAccount(String username) {
 
-        log.info("username={}", username);
-
         Optional<Account> accountWrapper = accountRepository.findByUsername(username);
         Account account = accountWrapper.get();
 

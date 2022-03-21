@@ -19,7 +19,7 @@
 
 <div class="m-5">
     <div class="my-2">
-        <h3>총 <span th:text="${businfos.totalElements}"></span>건</h3>
+        <h3>총 <span th:text="${busInfoDtos.totalElements}"></span>건</h3>
     </div>
     <table class="table text-center">
         <thead>
@@ -33,13 +33,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="businfo : ${businfos}">
-            <form th:action="@{'/searchtime/' + ${businfo.id}}" method="post">
-                <td th:text="${businfo.arrival}"></td>
-                <td th:text="${businfo.departtime}"></td>
-                <td th:text="${#numbers.formatInteger(businfo.price, 0, 'COMMA')}"></td>
-                <td th:text="${businfo.layover}"></td>
-                <td th:text="${businfo.note}"></td>
+        <tr th:each="busInfoDto : ${busInfoDtos}">
+            <form th:action="@{'/searchtime/' + ${busInfoDto.id}}" th:object="${busInfoDto}" method="post">
+                <td th:text="*{arrival}" th:field="*{arrival}" th:value="*{arrival}"></td>
+                <td th:text="*{departtime}" th:field="*{departtime}" th:value="*{departtime}"></td>
+                <td th:text="${#numbers.formatInteger(busInfoDto.price, 0, 'COMMA')}" th:field="*{price}" th:value="*{price}"></td>
+                <td th:text="*{layover}" th:field="*{layover}" th:value="*{layover}"></td>
+                <td th:text="*{note}" th:field="*{note}" th:value="*{note}"></td>
                 <td>
                     <button type="submit" class="btn btn-primary btn-sm">
                                 등록
@@ -54,7 +54,7 @@
 
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center"
-        th:with="start=${T(java.lang.Math).floor(businfos.number/10)*10 + 1}, last=(${start + 9 < businfos.totalPages ? start + 9 : businfos.totalPages})">
+        th:with="start=${T(java.lang.Math).floor(busInfoDtos.number/10)*10 + 1}, last=(${start + 9 < busInfoDtos.totalPages ? start + 9 : busInfoDtos.totalPages})">
 
         <li class="page-item">
             <a class="page-link" th:href="@{/searchtime(page=1, arrival=${arrival})}">
@@ -62,24 +62,24 @@
             </a>
         </li>
 
-        <li class="page-item" th:class="${businfos.first} ? 'disabled'">
-            <a class="page-link" th:href="${businfos.first} ? '#' : @{/searchtime(page=${businfos.number}, arrival=${arrival})}">
+        <li class="page-item" th:class="${busInfoDtos.first} ? 'disabled'">
+            <a class="page-link" th:href="${busInfoDtos.first} ? '#' : @{/searchtime(page=${busInfoDtos.number}, arrival=${arrival})}">
                 <span>이전</span>
             </a>
         </li>
 
-        <li th:class="${page == businfos.number + 1} ? 'disabled'" aria-current="page" th:each="page : ${#numbers.sequence(start, last)}">
+        <li th:class="${page == busInfoDtos.number + 1} ? 'disabled'" aria-current="page" th:each="page : ${#numbers.sequence(start, last)}">
             <a class="page-link" th:text="${page}" th:href="@{/searchtime(page=${page}, arrival=${arrival})}"></a>
         </li>
 
-        <li class="page-item"  th:class="${businfos.last} ? 'disabled'">
-            <a class="page-link" th:href="${businfos.last} ? '#' : @{/searchtime(page=${businfos.number + 2}, arrival=${arrival})}">
+        <li class="page-item"  th:class="${busInfoDtos.last} ? 'disabled'">
+            <a class="page-link" th:href="${busInfoDtos.last} ? '#' : @{/searchtime(page=${busInfoDtos.number + 2}, arrival=${arrival})}">
                 <span>다음</span>
             </a>
         </li>
 
         <li class="page-item">
-            <a class="page-link" th:href="@{/searchtime(page=${businfos.totalPages}, arrival=${arrival})}">
+            <a class="page-link" th:href="@{/searchtime(page=${busInfoDtos.totalPages}, arrival=${arrival})}">
                 <span>마지막</span>
             </a>
         </li>

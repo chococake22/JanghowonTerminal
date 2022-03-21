@@ -34,4 +34,10 @@ public class AccountBusInfo {
         this.businfo = businfo;
         this.notice = notice;
     }
+
+    public void update(Account account, BusInfo busInfo, String notice) {
+        this.setAccount(account);
+        this.setBusinfo(busInfo);
+        this.setNotice(notice);
+    }
 }
