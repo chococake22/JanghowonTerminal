@@ -74,14 +74,7 @@ public class BusInfoService {
         Optional<BusInfo> b = busInfoRepository.findById(id);
         BusInfo busInfo = b.get();
 
-        log.info("account.id : {}" + account.getId());
-        log.info("busInfo.id : {}" + busInfo.getId());
-
-        // 회원별 시간표 조회
-        List<AccountBusInfo> accountBusInfos = accountBusInfoRepository.findAllByAccount_Id(account.getId());
-
-
-        // 회원별 시간표에서 등록을 누른 시간표가 이미 있는지 없는지를 판단
+        // 로그인한 회원이 해당 시간표를 등록했으면 null이 아니고 안했으면 null이다.
         // 없으면 새로 등록, 있으면 건너 뛴다.
         if (accountBusInfoRepository.findByAccount_IdAndBusinfo_Id(account.getId(), busInfo.getId())==null) {
             AccountBusInfo accountBusInfo = new AccountBusInfo();
