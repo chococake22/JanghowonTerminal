@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @AllArgsConstructor // 생성자 주입을 받음
 public class CommentController {
 
-    @Autowired
     private CommentService commentService;
 
     // 댓글 작성 확인
@@ -24,7 +23,7 @@ public class CommentController {
     public String commentSave(CommentDto commentDto, BoardDto boardDto, Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
 
         commentService.save(commentDto, boardDto, accountDetails);
-        model.addAttribute("userAccount", accountDetails);
+        model.addAttribute("accountDetails", accountDetails);
         return "redirect:/notice";
     }
 }

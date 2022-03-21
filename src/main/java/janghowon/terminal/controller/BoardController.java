@@ -1,7 +1,7 @@
 package janghowon.terminal.controller;
 
 
-import janghowon.terminal.auth.UserAccount;
+import janghowon.terminal.auth.AccountDetails;
 import janghowon.terminal.dto.CommentDto;
 import janghowon.terminal.service.CommentService;
 import lombok.AllArgsConstructor;
@@ -44,20 +44,20 @@ public class BoardController {
 
     // 게시물 작성 확인
     @PostMapping("/write")
-    public String write(BoardDto boardDto, Model model, @AuthenticationPrincipal UserAccount userAccount) {
+    public String write(BoardDto boardDto, Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
         boardService.save(boardDto);
-        model.addAttribute("userAccount", userAccount);
+        model.addAttribute("accountDetails", accountDetails);
         return "redirect:/notice";
     }
 
     // 상세 정보
     @GetMapping("/write/{id}")
-    public String detail(@PathVariable("id") Long id, Model model, CommentDto commentDto, @AuthenticationPrincipal UserAccount userAccount) {
+    public String detail(@PathVariable("id") Long id, Model model, CommentDto commentDto, @AuthenticationPrincipal AccountDetails accountDetails) {
         BoardDto boardDto = boardService.getBoard(id);
         List<CommentDto> commentDtos = commentService.getComments(boardDto.getId());
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("commentDtos", commentDtos);
-        model.addAttribute("userAccount", userAccount);
+        model.addAttribute("accountDetails", accountDetails);
         return "board/detail";
     }
 
