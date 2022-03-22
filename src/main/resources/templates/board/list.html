@@ -45,7 +45,7 @@
                     <span th:text="${board.title}"></span>
                 </a>
             </td>
-            <td th:text="${board.writer}"></td>
+            <td th:text="${board.account.username}"></td>
             <td>
                 <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
             </td>

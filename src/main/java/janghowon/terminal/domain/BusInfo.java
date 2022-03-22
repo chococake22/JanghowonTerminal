@@ -25,13 +25,16 @@ public class BusInfo {
     @Column(nullable = false)
     private String departtime;
 
+    // 요금
     @Column(nullable = false)
     private Integer price;
 
     // 경유지
+    @Column
     private String layover;
 
     // 참고 사항
+    @Column
     private String note;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)

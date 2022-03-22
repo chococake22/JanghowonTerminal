@@ -13,9 +13,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
+@Validated
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -28,7 +31,6 @@ public class AccountService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<Account> accountWrapper = accountRepository.findByUsername(username);
-
         Account account = accountWrapper.get();
 
         if(account == null) {

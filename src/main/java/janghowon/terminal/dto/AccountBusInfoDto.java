@@ -3,8 +3,9 @@ package janghowon.terminal.dto;
 import janghowon.terminal.domain.Account;
 import janghowon.terminal.domain.AccountBusInfo;
 import janghowon.terminal.domain.BusInfo;
-import janghowon.terminal.role.Role;
 import lombok.*;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter

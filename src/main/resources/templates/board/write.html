@@ -18,15 +18,15 @@
     <h3>글쓰기</h3>
     <form th:action="@{/write}" method="post">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="title" id="title" placeholder="Leave a title here">
+            <input type="text" class="form-control" th:name="title" id="title" placeholder="Leave a title here">
             <label for="title">제목</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="writer" id="writer" th:value="${#authentication.name}" readonly>
-            <label for="writer">작성자</label>
+            <input type="text" class="form-control" th:name="${accountDetails.account.id}" id="account"  th:value="${accountDetails.account.username}" readonly>
+            <label for="account">작성자</label>
         </div>
         <div class="form-floating">
-            <textarea class="form-control" style="height: 300px" name="content" id="content" placeholder="Leave a comment here"></textarea>
+            <textarea class="form-control" style="height: 300px" th:name="content" id="content" placeholder="Leave a comment here"></textarea>
             <label for="content">내용</label>
         </div>
         <div class="my-3 d-flex justify-content-end">

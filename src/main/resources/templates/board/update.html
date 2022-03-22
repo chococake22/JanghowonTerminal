@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" th:value="${boardDto.writer}" name="writer" id="writer" placeholder="Leave a title here" readonly>
+            <input type="text" class="form-control" th:name="${accountDetails.account.id}" th:value="${boardDto.account.username}" id="writer" placeholder="Leave a title here" readonly>
             <label for="writer">작성자</label>
         </div>
 

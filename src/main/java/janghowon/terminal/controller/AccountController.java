@@ -34,8 +34,6 @@ public class AccountController {
 
     private AccountBusInfoRepository accountBusInfoRepository;
 
-
-
     // 메인 페이지
     @GetMapping("/")
     public String index(Model model, @AuthenticationPrincipal AccountDetails accountDetails) {

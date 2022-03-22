@@ -38,21 +38,22 @@ public class BoardController {
 
     // 게시물 작성
     @GetMapping("/write")
-    public String write() {
+    public String write(Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
+        model.addAttribute("accountDetails", accountDetails);
         return "board/write";
     }
 
     // 게시물 작성 확인
     @PostMapping("/write")
     public String write(BoardDto boardDto, Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
-        boardService.save(boardDto);
+        boardService.save(boardDto, accountDetails);
         model.addAttribute("accountDetails", accountDetails);
         return "redirect:/notice";
     }
 
     // 상세 정보
     @GetMapping("/write/{id}")
-    public String detail(@PathVariable("id") Long id, Model model, CommentDto commentDto, @AuthenticationPrincipal AccountDetails accountDetails) {
+    public String detail(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
         BoardDto boardDto = boardService.getBoard(id);
         List<CommentDto> commentDtos = commentService.getComments(boardDto.getId());
         model.addAttribute("boardDto", boardDto);
@@ -63,16 +64,18 @@ public class BoardController {
 
     // 게시물 수정
     @GetMapping("/write/edit/{id}")
-    public String edit(@PathVariable("id") Long id, Model model) {
+    public String edit(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal AccountDetails accountDetails) {
         BoardDto boardDto = boardService.getBoard(id);
         model.addAttribute("boardDto", boardDto);
+        model.addAttribute("accountDetails", accountDetails);
         return "board/update";
     }
 
     // 게시물 수정 확인
     @PutMapping("/write/edit/{id}")
-    public String update(BoardDto boardDto) {
-        boardService.save(boardDto);
+    public String update(Model model, BoardDto boardDto, @AuthenticationPrincipal AccountDetails accountDetails) {
+        boardService.save(boardDto, accountDetails);
+        model.addAttribute("accountDetails", accountDetails);
         return "redirect:/notice";
     }
 

@@ -1,5 +1,6 @@
 package janghowon.terminal.domain;
 
+
 import janghowon.terminal.role.Role;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,6 +17,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicUpdate
+@Table(name = "Account")
 public class Account  {
 
     @Id

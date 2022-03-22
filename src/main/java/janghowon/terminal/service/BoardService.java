@@ -1,6 +1,11 @@
 package janghowon.terminal.service;
 
 
+import janghowon.terminal.auth.AccountDetails;
+import janghowon.terminal.domain.Account;
+import janghowon.terminal.domain.Comment;
+import janghowon.terminal.repository.AccountRepository;
+import janghowon.terminal.repository.CommentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -10,6 +15,7 @@ import janghowon.terminal.domain.Board;
 import janghowon.terminal.dto.BoardDto;
 import janghowon.terminal.repository.BoardRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -17,6 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BoardService {
 
+    private AccountRepository accountRepository;
     private BoardRepository boardRepository;
 
     // 전체 게시물 조회
@@ -41,9 +48,10 @@ public class BoardService {
                 .stream()
                 .map(board -> new BoardDto(
                         board.getId(),
-                        board.getWriter(),
+                        board.getAccount(),
                         board.getTitle(),
                         board.getContent(),
+                        board.getComments(),
                         board.getCreatedDate(),
                         board.getModifiedDate()))
                 .collect(Collectors.toList()), pageable, totalElements);
@@ -61,7 +69,7 @@ public class BoardService {
 
         BoardDto boardDto = BoardDto.builder()
                 .id(board.getId())
-                .writer(board.getWriter())
+                .account(board.getAccount())
                 .title(board.getTitle())
                 .content(board.getContent())
                 .createdDate(board.getCreatedDate())
@@ -74,7 +82,11 @@ public class BoardService {
 
     // 게시물 작성
     @Transactional
-    public Long save(BoardDto boardDto) {
+    public Long save(BoardDto boardDto, AccountDetails accountDetails) {
+
+        Optional<Account> a = accountRepository.findById(accountDetails.getAccount().getId());
+        Account account = a.get();
+        boardDto.setAccount(account);
         return boardRepository.save(boardDto.toEntity()).getId();
     }
 
@@ -108,9 +120,10 @@ public class BoardService {
                 .stream()
                 .map(board -> new BoardDto(
                         board.getId(),
-                        board.getWriter(),
+                        board.getAccount(),
                         board.getTitle(),
                         board.getContent(),
+                        board.getComments(),
                         board.getCreatedDate(),
                         board.getModifiedDate()))
                 .collect(Collectors.toList()), pageable, totalElements);

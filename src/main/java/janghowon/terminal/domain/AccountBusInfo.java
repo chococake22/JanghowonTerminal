@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "AccountBusInfo")
 public class AccountBusInfo {
 
     @Id @GeneratedValue

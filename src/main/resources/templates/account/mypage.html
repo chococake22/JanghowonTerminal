@@ -67,7 +67,7 @@
                 <tr th:each="accountBusInfo : ${accountBusInfos}" >
                     <td th:text="${accountBusInfo.businfo.arrival}"></td>
                     <td th:text="${accountBusInfo.businfo.departtime}"></td>
-                    <td th:text="${accountBusInfo.businfo.price}"></td>
+                    <td th:text="${#numbers.formatInteger(accountBusInfo.businfo.price, 0, 'COMMA')}"></td>
                     <td th:text="${accountBusInfo.businfo.layover}"></td>
                     <td th:text="${accountBusInfo.businfo.note}"></td>
                 </tr>

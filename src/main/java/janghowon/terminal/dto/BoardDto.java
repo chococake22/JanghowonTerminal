@@ -1,8 +1,13 @@
 package janghowon.terminal.dto;
 
+import janghowon.terminal.domain.Account;
+import janghowon.terminal.domain.Comment;
 import lombok.*;
 import janghowon.terminal.domain.Board;
+
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,28 +16,31 @@ import java.time.LocalDateTime;
 public class BoardDto {
 
     private Long id;
-    private String writer;
+    private Account account;
     private String title;
     private String content;
+    private List<Comment> comments;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
     public Board toEntity() {
         Board board = Board.builder()
                 .id(id)
-                .writer(writer)
+                .account(account)
                 .title(title)
                 .content(content)
+                .comments(comments)
                 .build();
         return board;
     }
 
     @Builder
-    public BoardDto(Long id, String writer, String title, String content, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public BoardDto(Long id, Account account, String title, String content, List<Comment> comments, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
-        this.writer = writer;
+        this.account = account;
         this.title = title;
         this.content = content;
+        this.comments = comments;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

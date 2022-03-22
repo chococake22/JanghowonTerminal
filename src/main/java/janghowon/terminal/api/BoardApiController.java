@@ -1,5 +1,6 @@
 package janghowon.terminal.api;
 
+import janghowon.terminal.auth.AccountDetails;
 import janghowon.terminal.domain.Board;
 import janghowon.terminal.dto.BoardDto;
 import janghowon.terminal.repository.BoardRepository;
@@ -37,8 +38,8 @@ public class BoardApiController {
 
     // 게시물 수정
     @PutMapping("/write/edit/{id}")
-    public Long update(@RequestBody BoardDto boardDto) {
-        return boardService.save(boardDto);
+    public Long update(@RequestBody BoardDto boardDto, AccountDetails accountDetails) {
+        return boardService.save(boardDto, accountDetails);
     }
 
     // 게시물 검색
