@@ -15,13 +15,14 @@
 - 관리자는 시간표를 추가, 수정, 삭제 등을 할 수 있는 권한을 가지고 있다.
 
 ### 개발환경
-- Java 11
-- IntelliJ
+- Java 11 
+- Gradle
 - Spring Boot
 - JPA(hibernate)
 - Spring Security
 - Mysql
 - Thymeleaf
+- IntelliJ
 
 ### 테이블 설계
 
