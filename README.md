@@ -23,7 +23,15 @@
 - Mysql
 - Thymeleaf
 
+### 테이블 설계
 
+<img width="1055" alt="스크린샷 2022-03-23 오전 11 10 20" src="https://user-images.githubusercontent.com/93370148/159609735-0752cb65-8d19-4b62-a489-2dfd5b9e1a68.png">
+
+- Account : 회원
+- AccountBusInfo : 회원별 버스 시간표를 등록하는 객체
+- BusInfo : 버스 시간표
+- Board : 게시판의 게시글
+- Comment : 댓글
 
 
 ### 과정
