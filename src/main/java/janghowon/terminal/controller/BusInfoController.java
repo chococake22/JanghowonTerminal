@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class BusInfoController {
 
-    @Autowired
     private BusInfoService busInfoService;
 
     // 버스 시간 추가

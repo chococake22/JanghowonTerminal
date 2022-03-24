@@ -1,5 +1,6 @@
 package janghowon.terminal.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,7 +38,8 @@ public class BusInfo {
     @Column
     private String note;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "businfo", cascade = CascadeType.ALL)
+    @JsonManagedReference   // 직렬화 수행
     private List<AccountBusInfo> accountBusInfos = new ArrayList<>();
 
     @Builder

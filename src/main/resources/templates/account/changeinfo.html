@@ -24,7 +24,7 @@
         </button>
     </div>
 
-    <form class="row g-3" th:action="@{/mypage/changeinfo/changepwd}"  method="post">
+    <form class="row g-3" th:action="@{/changeinfo}"  method="post">
         <input type="hidden" th:id="id" th:name="id" th:value="${accountDto.id}" >
         <input type="hidden" th:id="role" th:name="role" th:value="${accountDto.role}" >
         <input type="hidden" th:id="password" th:name="password" th:value="${accountDetails.password}">

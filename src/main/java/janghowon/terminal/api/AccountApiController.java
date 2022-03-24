@@ -4,6 +4,7 @@ import janghowon.terminal.domain.Account;
 import janghowon.terminal.dto.AccountDto;
 import janghowon.terminal.repository.AccountRepository;
 import janghowon.terminal.service.AccountService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 @Slf4j
 public class AccountApiController {
 
-    @Autowired
     private AccountService accountService;
 
-    @Autowired
     private AccountRepository accountRepository;
 
     // 전체 회원 조회

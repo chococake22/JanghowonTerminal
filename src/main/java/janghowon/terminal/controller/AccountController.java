@@ -140,7 +140,7 @@ public class AccountController {
         return "account/changepwd";
     }
 
-    // 비밀번호 변경 폼
+    // 비밀번호 변경 확인
     @PutMapping("/changepwd")
     public String changePwdUpdate(@ModelAttribute AccountDto accountDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 

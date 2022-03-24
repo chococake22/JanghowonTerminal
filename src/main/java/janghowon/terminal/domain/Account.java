@@ -1,6 +1,7 @@
 package janghowon.terminal.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import janghowon.terminal.role.Role;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -43,7 +44,8 @@ public class Account  {
 
     // 원하는 버스 시간표 선택
     // 한명의 회원은 자기가 저장한 여러 개의 시간표를 가진다.
-    @OneToMany(mappedBy = "businfo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @JsonManagedReference   // 직렬화 수행
     private List<AccountBusInfo> accountBusInfos = new ArrayList<>();
 
     @Builder

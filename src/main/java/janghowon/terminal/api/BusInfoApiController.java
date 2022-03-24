@@ -2,6 +2,7 @@ package janghowon.terminal.api;
 
 import janghowon.terminal.dto.BusInfoDto;
 import janghowon.terminal.service.BusInfoService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 @Slf4j
 public class BusInfoApiController {
 
-    @Autowired
     private BusInfoService busInfoService;
 
     // 목적지별 검색

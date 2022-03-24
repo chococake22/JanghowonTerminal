@@ -22,10 +22,8 @@ import java.util.List;
 @AllArgsConstructor // 생성자 주입을 받음
 public class BoardController {
 
-    @Autowired
     private BoardService boardService;
 
-    @Autowired
     private CommentService commentService;
 
     // 게시물 목록 보기
@@ -58,7 +56,10 @@ public class BoardController {
         List<CommentDto> commentDtos = commentService.getComments(boardDto.getId());
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("commentDtos", commentDtos);
-        model.addAttribute("accountDetails", accountDetails);
+
+        if (accountDetails!=null) {
+            model.addAttribute("accountDetails", accountDetails);
+        }
         return "board/detail";
     }
 

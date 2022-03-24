@@ -1,8 +1,5 @@
 package janghowon.terminal.domain;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import janghowon.terminal.dto.CommentDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +27,6 @@ public class Board extends TimeEntity {
     // 추후에 페치 조인을 통해 수정할 예정이다.
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
-    @JsonIgnore
     private Account account;
 
     @Column(length = 100, nullable = false)
@@ -39,7 +35,7 @@ public class Board extends TimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    // 일대다 매핑 (mappedby = 상대방 테이블의 어느 필드를 참조하는지)
+    // 일대다 양방향 매핑 (mappedby = 상대방 테이블의 어느 필드를 참조하는지 - 주 객체의 주인을 설정한다.)
     // CascadeType.ALL -> 영속성 전이를 통해 board 삭제시 comments도 삭제가 되도록 한다.
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();

@@ -5,6 +5,7 @@ import janghowon.terminal.domain.Board;
 import janghowon.terminal.dto.BoardDto;
 import janghowon.terminal.repository.BoardRepository;
 import janghowon.terminal.service.BoardService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,13 +16,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 @Slf4j
 public class BoardApiController {
 
-    @Autowired
     private BoardService boardService;
 
-    @Autowired
     private BoardRepository boardRepository;
 
     // 게시물 목록 가져오기

@@ -1,5 +1,6 @@
 package janghowon.terminal.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,10 +19,12 @@ public class AccountBusInfo {
     // 각각의 account와 businfo를 조회할 경우 즉시 모든 정보를 가져올 필요는 없음
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
+    @JsonBackReference // 직렬화 안하기
     private Account account;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "businfo_id")
+    @JsonBackReference  // 직렬화 안함
     private BusInfo businfo;
 
     // 특이사항
