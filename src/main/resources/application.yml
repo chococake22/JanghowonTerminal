@@ -10,11 +10,14 @@ spring:
         enabled: true
   jpa:
     hibernate:
-      ddl-auto: update
-      properties:
+      ddl-auto: create
+    properties:
       hibernate:
-      show_sql: true
-      format_sql: true
+        show_sql: false
+        format_sql : true
+
+
+
 
   messages:
     basename: messages, errors

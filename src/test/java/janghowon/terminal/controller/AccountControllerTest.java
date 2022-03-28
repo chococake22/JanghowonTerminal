@@ -32,7 +32,7 @@ public class AccountControllerTest {
     void 회원가입() {
 
         // given
-        Account account = new Account(5L, "test1", "test12#$A", "test1@test.com", "01022224555", Role.USER);
+        Account account = new Account(1L, "test1", "test12#$A", "test1@test.com", "01022224555", Role.USER);
         AccountDto accountDto = AccountDto.builder()
                 .id(account.getId())
                 .username(account.getUsername())
