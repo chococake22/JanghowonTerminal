@@ -1,29 +1,29 @@
 package janghowon.terminal.controller;
 
-import janghowon.terminal.auth.AccountDetails;
 import janghowon.terminal.domain.Account;
 import janghowon.terminal.domain.Board;
+import janghowon.terminal.dto.AccountDto;
 import janghowon.terminal.dto.BoardDto;
 import janghowon.terminal.repository.AccountRepository;
 import janghowon.terminal.repository.BoardRepository;
 import janghowon.terminal.role.Role;
+import janghowon.terminal.service.AccountService;
 import janghowon.terminal.service.BoardService;
 import org.assertj.core.api.Assertions;
-import org.hibernate.internal.SessionFactoryImpl;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest // Spring Boot에서 테스트 관리
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)   // 테스트 순서를 Order를 통해 지정
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) // 모든 테스트 메서드를 동일한 인스턴스 환경에서 동작시키기 위해 사용한다.
 public class BoardControllerTest {
 
     @Autowired
@@ -36,33 +36,55 @@ public class BoardControllerTest {
     BoardController boardController;
 
     @Autowired
+    AccountService accountService;
+
+    @Autowired
     AccountRepository accountRepository;
 
-    @AfterEach
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    static Account account;
+    static Board board;
+
+    @BeforeAll
+    void 테스트이전() {
+
+        System.out.println("테스트 이전");
+
+        String pwd = "1234";
+        pwd =  bCryptPasswordEncoder.encode(pwd);
+
+        AccountDto accountDto = new AccountDto(1L, pwd, "1234", "apple@apple.com", "01012341234", Role.USER);
+        accountService.save(accountDto);
+        board = new Board(1L, account, "title1", "content1", new ArrayList<>());
+
+        BoardDto boardDto = BoardDto.builder()
+                .id(board.getId())
+                .account(board.getAccount())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .comments(board.getComments())
+                .build();
+
+        boardRepository.save(boardDto.toEntity()).getId();
+    }
+
+    @AfterAll
     void 테스트하고() {
+        System.out.println("테스트 이후");
         boardRepository.deleteAll();
     }
 
     @Test
+    @Order(1)
+    @DisplayName("글 작성하자")
     void 글작성() {
         // given
-        Account a = new Account(1L, "haha", "1234", "haha@naver.com", "01012341234", Role.USER);
-        Board b = new Board(1L, a, "title1", "content1", new ArrayList<>());
-        BoardDto boardDto = BoardDto.builder()
-                .id(b.getId())
-                .account(b.getAccount())
-                .title(b.getTitle())
-                .content(b.getContent())
-                .comments(b.getComments())
-                .build();
 
-        accountRepository.save(a);
-
-        boardRepository.save(boardDto.toEntity()).getId();
 
         // when
-        Optional<Board> b1 = boardRepository.findById(b.getId());
-        System.out.println("있나 없나? " + b1.isPresent());
+        Optional<Board> b1 = boardRepository.findById(board.getId());
         Board b2 = b1.get();
 
         BoardDto boardDto4 = BoardDto.builder()
@@ -82,54 +104,34 @@ public class BoardControllerTest {
     }
 
     @Test
+    @Order(2)
+    @DisplayName("글 수정하자")
     void 글수정() {
 
-        // given
-        Account a = new Account(1L, "haha", "1234", "haha@naver.com", "01012341234", Role.USER);
-        Board b = new Board(2L, a, "title2", "content1", new ArrayList<>());
-        BoardDto boardDto = BoardDto.builder()
-                .id(b.getId())
-                .account(b.getAccount())
-                .title(b.getTitle())
-                .content(b.getContent())
-                .comments(b.getComments())
-                .build();
-
-        boardRepository.save(boardDto.toEntity()).getId();
 
         // given
-        BoardDto boardDto1 = boardService.getBoard(b.getId());
+        BoardDto boardDto1 = boardService.getBoard(board.getId());
         boardDto1.setTitle("수정함");
         boardRepository.save(boardDto1.toEntity()).getId();
 
         // then
-        BoardDto boardDto2 = boardService.getBoard(b.getId());
-        System.out.println("boardDto1 : " + boardDto1.getTitle());
-        System.out.println("boardDto2 : " + boardDto2.getTitle());
+        BoardDto boardDto2 = boardService.getBoard(board.getId());
         Assertions.assertThat(boardDto2.getTitle()).isEqualTo(boardDto1.getTitle());
 
     }
 
     @Test
+    @Order(3)
+    @DisplayName("글 삭제하자")
     void 글삭제() {
 
         // given
-        Account account = new Account(1L, "haha", "1234", "haha@naver.com", "01012341234", Role.USER);
-        Board b = new Board(54L, account, "title2", "content1", new ArrayList<>());
-        BoardDto boardDto = BoardDto.builder()
-                .id(b.getId())
-                .account(b.getAccount())
-                .title(b.getTitle())
-                .content(b.getContent())
-                .comments(b.getComments())
-                .build();
 
-        boardRepository.save(boardDto.toEntity()).getId();
 
         // when
-        boardRepository.deleteById(57L);
+        boardRepository.deleteById(board.getId());
 
         // then
-        Assertions.assertThat(boardRepository.findById(b.getId()).isPresent()).isEqualTo(false);
+        Assertions.assertThat(boardRepository.findById(board.getId()).isPresent()).isEqualTo(false);
     }
 }

@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @Getter
-@MappedSuperclass   // 따로 테이블이 생성되는 것은 아니다 -> 그냥 자식 클래스(엔티티)에 매핑정보를 상속한다.
+@MappedSuperclass   // 따로 테이블이 생성되는 것은 아니다 -> 그냥 자식 클래스(엔티티)에 매핑정보를 상속한다. 트랜잭션 커밋 시점에 hibernate가 자동으로 값을 채워준다.
 @EntityListeners(AuditingEntityListener.class)
 public abstract class TimeEntity {  // 추상 클래스로 생성한다.
 

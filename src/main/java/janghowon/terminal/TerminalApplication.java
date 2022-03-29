@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@EnableJpaAuditing
+@EnableJpaAuditing	// JPA Auditing 활성화 -> JPA에서 시간에 대한 값을 자동으로 넣어준다.
 @SpringBootApplication
 public class TerminalApplication {
 

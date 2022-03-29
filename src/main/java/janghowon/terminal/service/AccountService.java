@@ -9,13 +9,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 @Validated
@@ -24,21 +22,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
 
+    // 생성자 주입
     private final AccountRepository accountRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    // 시큐리리 설정을 통해 로그인한 객체가 회원가입된 객체가 맞는지 확인
+    // UserDetails를 구현한 AccountDetails 객체로 반환해서 authentication 안에 저장한다.
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
 
-        Optional<Account> accountWrapper = accountRepository.findByUsername(username);
-        Account account = accountWrapper.get();
-
-        if(account == null) {
-            throw new UsernameNotFoundException("존재하지 않는 아이디입니다.");
-        }
+        // Optional.of 메소드를 통해 반드시 null이 아닌 값을 반환하게 하고 null일 경우 에러 발생(NullPointerException)
+        Optional<Account> account = Optional.of(accountRepository.findByUsername(username).get());
 
         // UserDetails를 구현한 객체에 담아서 넘기기
-        return new AccountDetails(account);
+        return new AccountDetails(account.get());
     }
 
     // 회원가입
@@ -48,6 +45,8 @@ public class AccountService implements UserDetailsService {
         // 회원가입시 자동으로 USER 권한 설정
         // ADMIN은 관리자만 사용
         accountDto.setRole(Role.USER);
+
+        // 회원가입 시 비밀번호 암호화
         accountDto.setPassword(bCryptPasswordEncoder
                 .encode(accountDto.getPassword()));
 
@@ -59,8 +58,12 @@ public class AccountService implements UserDetailsService {
     @Transactional
     public AccountDto getAccount(String username) {
 
-        Optional<Account> accountWrapper = accountRepository.findByUsername(username);
-        Account account = accountWrapper.get();
+        Optional<Account> accountOptional = Optional.of(accountRepository.findByUsername(username).get());
+
+        Account account = accountOptional.get();
+
+        log.info("왜 안되나 = {} ", accountOptional.get().getUsername());
+        log.info("로그 = {} ", account.getEmail());
 
         AccountDto accountDto = AccountDto.builder()
                 .id(account.getId())
@@ -78,8 +81,9 @@ public class AccountService implements UserDetailsService {
     // 회원정보 수정
     @Transactional
     public Long update(AccountDto accountDto) {
-        Optional<Account> accountWrapper = accountRepository.findById(accountDto.getId());
-        Account account = accountWrapper.get();
+
+        Optional<Account> accountOptional = Optional.of(accountRepository.findById(accountDto.getId()).get());
+        Account account = accountOptional.get();
 
         // 비밀번호 변경 여부
         if(accountDto.getPassword().equals(account.getPassword())) {
@@ -92,5 +96,4 @@ public class AccountService implements UserDetailsService {
         // 그래서 update가 반영된 것.
         return accountRepository.save(accountDto.toEntity()).getId();
     }
-
 }
