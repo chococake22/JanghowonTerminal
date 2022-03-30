@@ -42,11 +42,15 @@ public class AccountServiceTest {
     @Test
     void mockRepository() {
 
-        // 아무거나 넣어도 accountDto를 반환하게 메서드 설정
-        // accountRepository의 메서드를 정의
+
         // interface의 메서드도 설정이 가능하다.
+        // accountService를 테스트해야하기때문에 getAccount를 사용할 때에 accountRepository에 대한 메서드를 정의해주어야 한다.
+        // 그 이유는 accountRepository를 실제 DB와 연결해서 사용하는 것이 아닌 단순히 연결이 된다고 가정한 후 accountService를 테스트하는 것이기 때문이다.
+
+        // 먼저 accountRepository의 메서드를 정의
         when(accountRepository.findByUsername(any())).thenReturn(Optional.of(account));
 
+        // 그 다음에 accountService의 getAccount 메서드를 테스트한다
         assertThat(accountService.getAccount(account.getUsername()).getPhone()).isEqualTo(account.getPhone());
 
 
