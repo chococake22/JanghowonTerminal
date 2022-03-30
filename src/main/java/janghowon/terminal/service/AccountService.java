@@ -5,6 +5,8 @@ import janghowon.terminal.domain.Account;
 import janghowon.terminal.dto.AccountDto;
 import janghowon.terminal.repository.AccountRepository;
 import janghowon.terminal.role.Role;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,12 +21,12 @@ import java.util.Optional;
 @Validated
 @Slf4j
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AccountService implements UserDetailsService {
 
     // 생성자 주입
-    private final AccountRepository accountRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private AccountRepository accountRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // 시큐리리 설정을 통해 로그인한 객체가 회원가입된 객체가 맞는지 확인
     // UserDetails를 구현한 AccountDetails 객체로 반환해서 authentication 안에 저장한다.
@@ -58,12 +60,13 @@ public class AccountService implements UserDetailsService {
     @Transactional
     public AccountDto getAccount(String username) {
 
-        Optional<Account> accountOptional = Optional.of(accountRepository.findByUsername(username).get());
+        Optional<Account> accountOptional = accountRepository.findByUsername(username);
+
+        if(accountOptional == null) {
+            throw new NullPointerException();
+        }
 
         Account account = accountOptional.get();
-
-        log.info("왜 안되나 = {} ", accountOptional.get().getUsername());
-        log.info("로그 = {} ", account.getEmail());
 
         AccountDto accountDto = AccountDto.builder()
                 .id(account.getId())
