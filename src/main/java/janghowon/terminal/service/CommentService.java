@@ -7,6 +7,7 @@ import janghowon.terminal.dto.BoardDto;
 import janghowon.terminal.dto.CommentDto;
 import janghowon.terminal.repository.BoardRepository;
 import janghowon.terminal.repository.CommentRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +20,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class CommentService {
 
-    @Autowired
-    private final CommentRepository commentRepository;
+    private CommentRepository commentRepository;
 
-    @Autowired
     private BoardRepository boardRepository;
 
     // List에 담겨있는 Entity -> Dto로 변환하기위해서 사용된 라이브러리
-    @Autowired
     private ModelMapper modelMapper;
 
     // 댓글 작성

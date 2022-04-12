@@ -5,7 +5,6 @@ import janghowon.terminal.auth.AccountDetails;
 import janghowon.terminal.dto.CommentDto;
 import janghowon.terminal.service.CommentService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -60,6 +59,7 @@ public class BoardController {
         if (accountDetails!=null) {
             model.addAttribute("accountDetails", accountDetails);
         }
+
         return "board/detail";
     }
 

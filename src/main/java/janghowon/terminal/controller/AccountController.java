@@ -52,7 +52,7 @@ public class AccountController {
     @PostMapping("/signup")
     public String signUp(@ModelAttribute AccountDto accountDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        // 조건에 맞는지 오류를 검증하고 오류가 나면 bindingResult에 FieldError 객체를 집어 넣는다
+        // 조건에 맞는지 오류를 검증하고 오류가 나면 bindingResult에 FieldError 객체를 담아둔다.
 
         // 검증 로직
         // 1. 아이디를 입력하지 않은 경우

@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@AllArgsConstructor
+@AllArgsConstructor // 전체 필드를 가지고 생성자를 만든다.
 @Slf4j
 public class AccountApiController {
 
@@ -45,14 +45,6 @@ public class AccountApiController {
     public Long update(@RequestBody AccountDto accountDto) {
         return accountService.update(accountDto);
     }
-
-
-
-
-
-
-
-
 
 
 }

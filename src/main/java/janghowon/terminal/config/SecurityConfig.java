@@ -23,14 +23,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/favicon.ico", "/resources/**","/error");
+                .antMatchers("/favicon.ico","/css/**", "/images/**",  "/js/**", // -- Static resources
+                        "/css/**", "/images/**", "/js/**"
+                        // -- Swagger UI v2
+                        , "/v2/api-docs", "/swagger-resources/**"
+                        , "/swagger-ui.html", "/webjars/**", "/swagger/**"
+                        // -- Swagger UI v3 (Open API)
+                        , "/v3/api-docs/**", "/swagger-ui/**", "/error");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/", "/notice", "/write/{id}", "/location", "/board/search", "/searchtime", "/signup", "/login").permitAll()
+                .antMatchers("/", "/notice", "/write/{id}", "/location", "/board/search", "/searchtime", "/signup", "/login",
+                        "/api/**", "/swagger-ui.html").permitAll()
                 .antMatchers("/write").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/time/timeadd").hasRole("ADMIN")
                 .anyRequest().authenticated()

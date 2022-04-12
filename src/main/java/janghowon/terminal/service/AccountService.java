@@ -6,8 +6,6 @@ import janghowon.terminal.dto.AccountDto;
 import janghowon.terminal.repository.AccountRepository;
 import janghowon.terminal.role.Role;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,10 +32,12 @@ public class AccountService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
 
         // Optional.of 메소드를 통해 반드시 null이 아닌 값을 반환하게 하고 null일 경우 에러 발생(NullPointerException)
-        Optional<Account> account = Optional.of(accountRepository.findByUsername(username).get());
+        Optional<Account> accountOptional = Optional.of(accountRepository.findByUsername(username)).get();
+
+        Account account = accountOptional.get();
 
         // UserDetails를 구현한 객체에 담아서 넘기기
-        return new AccountDetails(account.get());
+        return new AccountDetails(account);
     }
 
     // 회원가입
@@ -60,11 +60,8 @@ public class AccountService implements UserDetailsService {
     @Transactional
     public AccountDto getAccount(String username) {
 
-        Optional<Account> accountOptional = accountRepository.findByUsername(username);
-
-        if(accountOptional == null) {
-            throw new NullPointerException();
-        }
+        // null일 경우 NPE 에러
+        Optional<Account> accountOptional = Optional.of(accountRepository.findByUsername(username)).get();
 
         Account account = accountOptional.get();
 
